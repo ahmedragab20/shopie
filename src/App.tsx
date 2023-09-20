@@ -1,7 +1,13 @@
+import Header from "./components/Header";
+
 function App() {
   return (
     <div id="app">
-      <h1>Hello world</h1>
+      <Header />
+
+      <div className=" mx-auto h-[200svh]">
+        <Outlet />
+      </div>
     </div>
   );
 }
