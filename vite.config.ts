@@ -11,6 +11,12 @@ export default defineConfig({
         "react",
         "react-router-dom",
         {
+          "react-dom": ["createPortal", "render"],
+        },
+        {
+          "react-dom/client": ["createRoot"],
+        },
+        {
           "ar-catch": ["config", "$catch", "useCache"],
         },
       ],

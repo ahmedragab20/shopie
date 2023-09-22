@@ -2,10 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  font-family: 'Roboto', sans-serif;
+html,
+body {
+  font-family: "Roboto", sans-serif;
 }
 
 .text-heading {
-  font-family: 'Lekton', sans-serif;
+  font-family: "Lekton", sans-serif;
+}
+
+.black-bg {
+  @apply bg-[#222222];
 }

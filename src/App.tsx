@@ -1,11 +1,20 @@
 import Header from "./components/Header";
+import { useRef } from "react";
 
 function App() {
-  return (
-    <div id="app">
-      <Header />
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerHeight = headerRef.current?.getBoundingClientRect().height;
 
-      <div className=" mx-auto h-[200svh]">
+  return (
+    <div
+      id="shopie_app"
+      style={{
+        paddingTop: headerHeight,
+      }}
+    >
+      <Header ref={headerRef} />
+
+      <div className="mx-auto h-[200svh]">
         <Outlet />
       </div>
     </div>
