@@ -30,18 +30,12 @@ const Button: React.FC<ButtonProps> = ({
         e.stopPropagation();
         e.preventDefault();
 
-        if (
-          e.target === e.currentTarget ||
-          // @ts-ignore
-          e.target?.id === "component_div_button"
-        ) {
-          onClick?.();
-        }
-      }} // Add onClick event handler
+        onClick?.();
+      }}
     >
       <div
         id="component_div_button"
-        className={`rounded-full w-full h-full text-sm px-5 py-1 text-white font-semibold ${bgColor}`}
+        className={`rounded-full w-full h-full text-sm px-5 py-1 text-white ${bgColor}`}
       >
         {children}
       </div>

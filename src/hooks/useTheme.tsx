@@ -8,7 +8,7 @@ export function useTheme() {
 
   const appHtml = useRef(document.documentElement);
 
-  const setTheme = (theme) => {
+  const setTheme = (theme: string) => {
     setDeviceTheme(theme);
 
     const newTheme = theme === "light" ? "dark" : "light";

@@ -3,7 +3,13 @@ import { useRef } from "react";
 
 function App() {
   const headerRef = useRef<HTMLDivElement>(null);
-  const headerHeight = headerRef.current?.getBoundingClientRect().height;
+  const [headerHeight, setHeaderHeight] = useState<number>(0);
+
+  useEffect(() => {
+    if (headerRef.current) {
+      setHeaderHeight(headerRef.current.getBoundingClientRect().height);
+    }
+  }, [headerRef]);
 
   return (
     <div
