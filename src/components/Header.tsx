@@ -2,18 +2,12 @@ import React from "react";
 import Button from "./Base/Button";
 import Dialog from "./Base/Dialog";
 
-interface HeaderRefs {
-  ref?: React.RefObject<HTMLDivElement>;
-}
-
-const Header = React.forwardRef<HTMLDivElement, HeaderRefs>((_, ref) => {
+const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
     <>
-      <header
-        ref={ref}
-        className="p-2 flex justify-center items-center flex-col backdrop-blur-md fixed top-0 left-0 w-full"
-      >
+      <header className="p-2 flex justify-center items-center flex-col backdrop-blur-md fixed top-0 left-0 w-full">
         <div className="container mx-auto">
           <div className="w-full flex items-center justify-between">
             <span className="w-10 h-10 cursor-pointer select-none flex justify-center items-center border rounded-full  overflow-hidden p-1.5">
@@ -87,6 +81,6 @@ const Header = React.forwardRef<HTMLDivElement, HeaderRefs>((_, ref) => {
       )}
     </>
   );
-});
+};
 
 export default Header;

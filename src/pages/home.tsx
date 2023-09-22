@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <>
       {/* Recently added section */}
-      <div className="flex items-center flex-col justify-end lg:h-screen min-h-[60vh] lg:min-h-screen max-h-[900px]">
+      <div className="flex items-center flex-col justify-end md:h-screen min-h-[40hv] md:min-h-screen max-h-[900px] mt-28 md:mt-0">
         <div className="flex justify-center flex-col items-center w-full sm:w-3/4 mx-auto px-2 mb-8">
           <div>
             <h3 className="text-center sm:text-6xl text-4xl font-extrabold text-heading">
@@ -40,10 +40,6 @@ const Home = () => {
               Distinctio, id aut eius quod sed officiis numquam excepturi animi
               et possimus! Cum sequi praesentium dolore aut, accusamus magni
               eveniet autem deleniti.
-            </p>
-            <p className="text-center sm:text-base text-xs">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Distinctio, id aut eius quod sed
             </p>
           </div>
           <div ref={moreBtnRef} className="opacity-0 duration-300">
