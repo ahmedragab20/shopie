@@ -42,12 +42,12 @@ const Header: React.FC = () => {
               onClick={() => {
                 setIsOpen(false);
               }}
-              className="absolute top-2 right-2 text-heading cursor-pointer bg-white px-3 py-0.5 text-black rounded-full duration-300 active:scale-95"
+              className="absolute select-none top-2 right-2 text-heading cursor-pointer bg-white px-3 py-0.5 text-black rounded-full duration-300 active:scale-95"
             >
               Close
             </div>
 
-            <div className="flex">
+            <div className="flex h-full">
               <div className="sm:w-1/2 w-full h-full py-3 px-5 sm:p-10">
                 <div>
                   <h3 className="sm:text-6xl text-3xl text-heading">Shopie</h3>
@@ -69,9 +69,8 @@ const Header: React.FC = () => {
               </div>
               <div className="sm:w-1/2 w-full h-full">
                 <img
-                  src="https://images.unsplash.com/photo-1604871000636-074fa5117945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80"
-                  className="w-full h-full object-contain pointer-events-none select-none"
-                  loading="lazy"
+                  src="/sidebar-img.jpg"
+                  className="w-full h-full object-cover pointer-events-none select-none"
                   alt=""
                 />
               </div>
