@@ -1,0 +1,34 @@
+{
+  "product": {
+    "id": "iphone-15-APPLE",
+    "name": "iPhone 15",
+    "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum dolore, veniam quaerat delectus itaque amet assumenda magni, aliquid vero odit ipsam magnam, nemo placeat maxime. Fugiat voluptatum aliquam atque unde?",
+    "price": 699,
+    "currency": "USD Dollars",
+    "currencySymbol": "$",
+    "images": [
+      {
+        "color": "pink",
+        "url": "/pink-iphone-15.jpg",
+        "alt": "Pink iPhone 15 image",
+        "title": "Pink iPhone 15"
+      },
+      {
+        "color": "lightblue",
+        "url": "/lightblue-iphone-15.jpg",
+        "alt": "Light Blue iPhone 15 image",
+        "title": "Light Blue iPhone 15"
+      }
+    ],
+    "colors": [
+      {
+        "name": "pink",
+        "hex": "#e18e98"
+      },
+      {
+        "name": "lightblue",
+        "hex": "#CCD6DD"
+      }
+    ]
+  }
+}
