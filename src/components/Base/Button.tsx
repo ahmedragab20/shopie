@@ -1,8 +1,21 @@
 interface ButtonProps {
+  /**
+   * Background color in tailwindcss format
+   */
   bgColor: string;
+  /**
+   * Outline border color in tailwindcss format
+   */
   outlineBorderColor: string;
   children?: React.ReactNode;
+  /**
+   * Button type
+   * @default button
+   */
   type?: "button" | "submit" | "reset";
+  /**
+   * onClick event handler
+   */
   onClick?: () => void; // Add onClick prop
 }
 
@@ -25,7 +38,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       type={type || "button"}
-      className={`border rounded-full overflow-hidden p-1 mt-5 active:scale-95 duration-300 select-none ${outlineBorderColor}`}
+      className={`border rounded-full overflow-hidden p-0.5 active:scale-95 duration-300 select-none ${outlineBorderColor}`}
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();

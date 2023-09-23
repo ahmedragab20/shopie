@@ -6,10 +6,15 @@
     "price": 699,
     "currency": "USD Dollars",
     "currencySymbol": "$",
+    "brand": "iPhone",
+    "model": "15",
+    "company": "Apple",
+    "category": "Smartphone",
+    "subcategory": "iPhone",
     "images": [
       {
         "color": "pink",
-        "url": "/pink-iphone-15.jpg",
+        "url": "/pink-iphone-15.png",
         "alt": "Pink iPhone 15 image",
         "title": "Pink iPhone 15"
       },
@@ -23,11 +28,19 @@
     "colors": [
       {
         "name": "pink",
-        "hex": "#e18e98"
+        "hex": "#e18e98",
+        "bg_tailwind": "bg-[#e18e98]",
+        "color_tailwind": "text-[#e18e98]",
+        "lighter_hex": "#F8A5AE",
+        "darker_hex": "#7f3c48"
       },
       {
         "name": "lightblue",
-        "hex": "#CCD6DD"
+        "hex": "#CCD6DD",
+        "bg_tailwind": "bg-[#CCD6DD]",
+        "color_tailwind": "text-[#CCD6DD]",
+        "lighter_hex": "#E0E9F0",
+        "darker_hex": "#9bb5c9"
       }
     ]
   }

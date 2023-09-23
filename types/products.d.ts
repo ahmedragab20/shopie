@@ -5,6 +5,11 @@ export interface Product {
   price: number;
   currency: string;
   currencySymbol: string;
+  brand: string;
+  model: string;
+  category: string;
+  subcategory: string;
+  company: string;
   images: Image[];
   colors: Color[];
 }
@@ -19,4 +24,8 @@ export interface Image {
 export interface Color {
   name: string;
   hex: string;
+  bg_tailwind: string;
+  color_tailwind: string;
+  lighter_hex: string;
+  darker_hex: string;
 }
