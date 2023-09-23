@@ -106,7 +106,7 @@ const Home = () => {
         <div className="flex justify-center items-center flex-col">
           <h3 className="text-heading text-4xl sm:text-5xl">Recent Products</h3>
         </div>
-        <div className="my-5">
+        <div className="my-5 container mx-auto px-3 sm:px-0">
           <div className="flex justify-center items-center flex-wrap gap-5">
             {products?.length &&
               products.map((product, i) => (
@@ -152,7 +152,7 @@ const Home = () => {
             setSeeMoreDialog(false);
           }}
         >
-          <div className="bg-[#FAFAFA] backdrop-blur-xl py-5 border overflow-hidden shadow-2xl text-white rounded-2xl sm:w-10/12 relative sm:h-auto min-h-[70svh] max-h-screen w-full">
+          <div className="bg-[#FAFAFA] backdrop-blur-xl py-5 border overflow-hidden overflow-y-auto shadow-2xl text-white rounded-2xl sm:w-10/12 relative sm:h-auto max-h-screen w-full max-w-[1196px]">
             {/* close icon */}
             <div
               onClick={() => {
@@ -164,7 +164,7 @@ const Home = () => {
             </div>
 
             {/* content */}
-            <div className="text-black flex h-full w-full flex-col-reverse xl:flex-row xl:p-8 p-5 overflow-auto">
+            <div className="text-black flex h-full w-full min-h-full max-h-full flex-col-reverse xl:flex-row xl:p-8 p-5 overflow-auto">
               {/* details */}
               <div className="xl:w-1/2 w-full">
                 <div>
