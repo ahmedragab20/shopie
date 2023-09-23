@@ -164,11 +164,11 @@ const Home = () => {
             </div>
 
             {/* content */}
-            <div className="text-black flex h-full w-full flex-col-reverse sm:flex-row sm:p-8 p-5 overflow-auto">
+            <div className="text-black flex h-full w-full flex-col-reverse xl:flex-row xl:p-8 p-5 overflow-auto">
               {/* details */}
-              <div className="sm:w-1/2 w-full">
+              <div className="xl:w-1/2 w-full">
                 <div>
-                  <h3 className="sm:text-[7rem] mt-10 text-5xl text-heading text-[#333] font-extrabold">
+                  <h3 className="xl:text-[7rem] mt-10 text-5xl text-heading text-[#333] font-extrabold">
                     {mostRecent?.brand}
                     <strong
                       style={{
@@ -180,14 +180,14 @@ const Home = () => {
                       {mostRecent?.model}
                     </strong>
                   </h3>
-                  <p className="text-xs sm:text-sm text-stone-400 mt-10">
+                  <p className="text-xs xl:text-sm text-stone-400 mt-10">
                     {mostRecent?.description}
                   </p>
                 </div>
                 <div className="mt-5">
                   {/* pick color */}
                   <div className="flex items-center justify-between">
-                    <h4 className="text-sm sm:text-lg text-heading">
+                    <h4 className="text-sm xl:text-lg text-heading">
                       Pick a color
                     </h4>
                   </div>
@@ -196,7 +196,7 @@ const Home = () => {
                       <div className="flex gap-2">
                         {mostRecent?.colors.map((color, i) => (
                           <div
-                            className="p-0.5 w-8 h-8 sm:w-10 sm:h-10 cursor-pointer rounded-full duration-300 active:scale-95"
+                            className="p-0.5 w-8 h-8 xl:w-10 xl:h-10 cursor-pointer rounded-full duration-300 active:scale-95"
                             key={i}
                             style={{
                               border:
@@ -241,7 +241,7 @@ const Home = () => {
                 </div>
               </div>
               {/* Product Preview */}
-              <div className="sm:w-1/2 w-full">
+              <div className="xl:w-1/2 w-full">
                 <div className="flex h-full justify-center items-center">
                   <div className="relative h-full">
                     <div className=" w-full h-full">

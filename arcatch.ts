@@ -1,5 +1,5 @@
 config({
-  baseURL: "./src/db/",
+  baseURL: "/db/",
   onErr(error) {
     console.error(error);
   },
