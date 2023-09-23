@@ -7,13 +7,25 @@ import { useTailwindBreakpoints } from "../hooks/useTailwindBreakpoints";
 const Home = () => {
   const tBreakpoint = useTailwindBreakpoints();
   const moreBtnRef = useRef<HTMLDivElement>(null);
-  const [seeMoreDialog, setSeeMoreDialog] = useState<boolean>(false);
+  const [seeMoreRecentDialog, setSeeMoreRecentDialog] =
+    useState<boolean>(false);
   const [mostRecent, setMostRecent] = useState<Product>();
   const [selectedColor, setSelectedColor] = useState<Color>();
-  const ativeImage = mostRecent?.images?.find(
+  const products = useHomeProducts();
+  const [activeNewProduct, setActiveNewProduct] = useState<Product>();
+  const [previewNewProductDialog, setPreviewNewProductDialog] =
+    useState<boolean>(false);
+
+  const dialogProduct = activeNewProduct || mostRecent;
+  const activeImage = dialogProduct?.images?.find(
     (image) => image.color === selectedColor?.name
   );
-  const products = useHomeProducts();
+
+  const toggleNewProductPreview = (product?: Product) => {
+    setActiveNewProduct(product);
+    setPreviewNewProductDialog(product ? true : false);
+    setSelectedColor(product?.colors?.[0]);
+  };
 
   useEffect(() => {
     const moreBtn = moreBtnRef.current;
@@ -37,7 +49,7 @@ const Home = () => {
   }, [tBreakpoint]);
 
   useEffect(() => {
-    if (!seeMoreDialog) return;
+    if (!seeMoreRecentDialog) return;
 
     (async () => {
       const { product } = await $catch({
@@ -48,7 +60,7 @@ const Home = () => {
       setMostRecent(product);
       setSelectedColor(product?.colors?.[0]);
     })();
-  }, [seeMoreDialog]);
+  }, [seeMoreRecentDialog]);
 
   return (
     <>
@@ -70,7 +82,7 @@ const Home = () => {
             {/* TODO: create a reusable component for it! */}
             <Button
               onClick={() => {
-                setSeeMoreDialog(true);
+                setSeeMoreRecentDialog(true);
               }}
               bgColor="bg-[#D594A0]"
               outlineBorderColor="border-[#D594A0]"
@@ -113,6 +125,9 @@ const Home = () => {
                 <div
                   className="w-40 relative sm:w-60 rounded-2xl overflow-hidden border hover:border-none hover:shadow-2xl duration-200"
                   key={i}
+                  onClick={() => {
+                    toggleNewProductPreview(product);
+                  }}
                 >
                   <div className="w-full h-48 p-3 sm:p-6">
                     <img
@@ -143,33 +158,33 @@ const Home = () => {
         </div>
       </div>
 
-      {/* TOODO:: Refactore this to display the other dialogs as well */}
-
       {/* Dialogs */}
-      {seeMoreDialog && (
+      {(seeMoreRecentDialog || previewNewProductDialog) && (
         <Dialog
           onClose={() => {
-            setSeeMoreDialog(false);
+            setSeeMoreRecentDialog(false);
+            setPreviewNewProductDialog(false);
           }}
         >
-          <div className="bg-[#FAFAFA] backdrop-blur-xl py-5 border overflow-hidden overflow-y-auto shadow-2xl text-white rounded-2xl sm:w-10/12 relative sm:h-auto max-h-screen w-full max-w-[1196px]">
+          <div className="bg-[#FAFAFA] backdrop-blur-xl px-2 sm:pt-5 sm:pb-5 pt-6 pb-0 border overflow-hidden shadow-2xl text-white rounded-2xl sm:w-10/12 relative sm:h-auto xl:max-h-screen w-full max-w-[1196px]">
             {/* close icon */}
             <div
               onClick={() => {
-                setSeeMoreDialog(false);
+                setSeeMoreRecentDialog(false);
+                setPreviewNewProductDialog(false);
               }}
-              className="absolute select-none top-2 right-2 text-heading cursor-pointer black-bg px-3 py-0.5 text-white rounded-full duration-300 active:scale-95"
+              className="absolute select-none top-2 right-2 z-10 shadow text-heading cursor-pointer black-bg px-3 py-0.5 text-white rounded-full duration-300 active:scale-95"
             >
               Close
             </div>
 
             {/* content */}
-            <div className="text-black flex h-full w-full min-h-full max-h-full flex-col-reverse xl:flex-row xl:p-8 p-5 overflow-auto">
+            <div className="text-black flex w-full max-h-[85svh] flex-col-reverse overflow-y-auto xl:flex-row xl:p-8 p-5 pt-10">
               {/* details */}
               <div className="xl:w-1/2 w-full">
-                <div>
+                <div className="pr-3">
                   <h3 className="xl:text-[7rem] mt-10 text-5xl text-heading text-[#333] font-extrabold">
-                    {mostRecent?.brand}
+                    {dialogProduct?.brand}
                     <strong
                       style={{
                         backgroundImage: `linear-gradient(to right, ${selectedColor?.lighter_hex}, ${selectedColor?.darker_hex})`,
@@ -177,11 +192,11 @@ const Home = () => {
                         WebkitTextFillColor: "transparent",
                       }}
                     >
-                      {mostRecent?.model}
+                      {dialogProduct?.model}
                     </strong>
                   </h3>
-                  <p className="text-xs xl:text-sm text-stone-400 mt-10">
-                    {mostRecent?.description}
+                  <p className="text-xs xl:text-sm text-stone-400 xl:mt-10 mt-5">
+                    {dialogProduct?.description}
                   </p>
                 </div>
                 <div className="mt-5">
@@ -194,7 +209,7 @@ const Home = () => {
                   <div>
                     <div>
                       <div className="flex gap-2">
-                        {mostRecent?.colors.map((color, i) => (
+                        {dialogProduct?.colors.map((color, i) => (
                           <div
                             className="p-0.5 w-8 h-8 xl:w-10 xl:h-10 cursor-pointer rounded-full duration-300 active:scale-95"
                             key={i}
@@ -232,9 +247,9 @@ const Home = () => {
                     >
                       <div className="flex gap-2 items-center w-full">
                         <div className="py-0.5 px-2 rounded-full bg-white font-bold text-[#222]">
-                          {mostRecent?.currencySymbol} {mostRecent?.price}
+                          {dialogProduct?.currencySymbol} {dialogProduct?.price}
                         </div>
-                        <div>Order Now!</div>
+                        <div>drag to the cart!</div>
                       </div>
                     </Button>
                   </div>
@@ -246,9 +261,9 @@ const Home = () => {
                   <div className="relative h-full">
                     <div className=" w-full h-full">
                       <img
-                        src={ativeImage?.url}
-                        alt={ativeImage?.alt}
-                        className="w-full h-full object-cover rounded-2xl"
+                        src={activeImage?.url}
+                        alt={activeImage?.alt}
+                        className="w-full h-full object-contain rounded-2xl sm:max-h-[550px] max-h-[350px]"
                       />
                     </div>
                   </div>

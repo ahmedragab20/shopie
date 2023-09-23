@@ -14,18 +14,18 @@
       "subcategory": "Android",
       "images": [
         {
-          "color": "dark green",
-          "url": "/products/galaxy-s23.webp",
+          "color": "dark_green",
+          "url": "/products/galaxy-s23-ultra.png",
           "alt": "Dark Green Samsung Galaxy S23 Ultra",
           "title": "Samsung Galaxy S23 Ultra"
         }
       ],
       "colors": [
         {
-          "name": "dark-green",
-          "hex": "##535A50",
-          "bg_tailwind": "bg-[##535A50]",
-          "color_tailwind": "text-[##535A50]",
+          "name": "dark_green",
+          "hex": "#535A50",
+          "bg_tailwind": "bg-[#535A50]",
+          "color_tailwind": "text-[#535A50]",
           "lighter_hex": "#8B8F8A",
           "darker_hex": "#40463E"
         }
