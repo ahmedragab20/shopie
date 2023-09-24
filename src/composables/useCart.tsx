@@ -1,16 +1,23 @@
-import { ICartProduct } from "../types/products";
+import { ICartProduct, Image } from "../types/products";
 import { paseJson } from "../utils/validators";
 
-const _cart = paseJson(localStorage.getItem("__shopie__cart___") || "[]");
-const _setCart = (cart: ICartProduct[]) =>
+let _cart = paseJson(localStorage.getItem("__shopie__cart___") || "[]");
+const _setCart = (cart: ICartProduct[]) => {
   localStorage.setItem("__shopie__cart___", JSON.stringify(cart));
+  _cart = cart;
+};
 /**
  * check if product exists in cart
  * @param product
  * @returns
  */
 const _productExists = (product: ICartProduct) =>
-  _cart.some((p: ICartProduct) => p.id === product.id);
+  _cart.some((p: ICartProduct) => {
+    return (
+      p.id === product.id ||
+      p.id === `${product.id}-${product?.chosenColor.name}`
+    );
+  });
 
 /**
  * Add product to cart
@@ -24,15 +31,31 @@ export const addToCart = (product: ICartProduct) => {
   try {
     if (_productExists(product)) {
       const existingProduct: ICartProduct = _cart.find(
-        (p: ICartProduct) => p.id === product.id
-      ); // used find to acvoid unnecessary iterations
+        (p: ICartProduct) =>
+          p.id === product.id ||
+          p.id === `${product.id}-${product?.chosenColor.name}`
+      ); // used find() to acvoid unnecessary iterations
 
       if (existingProduct.chosenColor.name !== product.chosenColor.name) {
-        existingProduct.chosenColor = product.chosenColor;
-        existingProduct.quantity = 1;
+        const newProductInstance = { ...product };
+        newProductInstance.id = `${product.id}-${product.chosenColor.name}`;
+        newProductInstance.quantity = 1;
+        newProductInstance.chosenColor = product.chosenColor;
+        if (product.images?.length) {
+          const img = product.images.find(
+            (image) => image.color === product.chosenColor.name
+          );
 
-        // TODO: add new product to cart insead with new color
-        // TODO: modify the id of the new product to be unique (id + color)
+          newProductInstance.images = [img as Image];
+        }
+        if (product.colors?.length) {
+          const color = product.colors.find(
+            (color) => color.name === product.chosenColor.name
+          );
+          newProductInstance.colors = [color as any];
+        }
+
+        _cart.unshift(newProductInstance);
       } else {
         existingProduct.quantity += 1;
       }
@@ -40,11 +63,6 @@ export const addToCart = (product: ICartProduct) => {
       _cart.unshift(product);
     }
     _setCart(_cart);
-    console.log(
-      `%c✅Adding product with id ${product.id} to cart`,
-      "color: #CA929E; font-weight: bold; font-size: 1.2rem;",
-      _cart
-    );
   } catch (error) {
     console.warn(error);
   }
