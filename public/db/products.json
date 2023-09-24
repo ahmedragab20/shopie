@@ -14,7 +14,7 @@
       "subcategory": "Android",
       "images": [
         {
-          "color": "dark green",
+          "color": "dark-green",
           "url": "/products/green-galaxy-s23-ultra.webp",
           "alt": "Dark Green Samsung Galaxy S23 Ultra",
           "title": "Samsung Galaxy S23 Ultra"
@@ -28,7 +28,7 @@
       ],
       "colors": [
         {
-          "name": "dark green",
+          "name": "dark-green",
           "hex": "#535A50",
           "bg_tailwind": "bg-[#535A50]",
           "color_tailwind": "text-[#535A50]",
@@ -65,7 +65,7 @@
           "title": "iPad Pro"
         },
         {
-          "color": "space gray",
+          "color": "space-gray",
           "url": "/products/spacegray-ipad-pro.webp",
           "alt": "Space Gray iPad Pro",
           "title": "iPad Pro"
@@ -81,7 +81,7 @@
           "darker_hex": "#105FDC"
         },
         {
-          "name": "space gray",
+          "name": "space-gray",
           "hex": "#6A6A6C",
           "bg_tailwind": "bg-[#6A6A6C]",
           "color_tailwind": "text-[#6A6A6C]",
@@ -155,7 +155,7 @@
           "title": "MacBook Pro"
         },
         {
-          "color": "space gray",
+          "color": "space-gray",
           "url": "/products/spacegray-macbook-pro.webp",
           "alt": "Space Gray MacBook Pro",
           "title": "MacBook Pro"
@@ -171,7 +171,7 @@
           "darker_hex": "#1D804C"
         },
         {
-          "name": "space gray",
+          "name": "space-gray",
           "hex": "#C0C0C0",
           "bg_tailwind": "bg-[#C0C0C0]",
           "color_tailwind": "text-[#C0C0C0]",

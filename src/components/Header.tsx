@@ -1,30 +1,26 @@
 import React from "react";
 import Button from "./Base/Button";
 import Dialog from "./Base/Dialog";
-import { paseJson } from "../utils/validators";
+// import { paseJson } from "../utils/validators";
 import { ICartProduct } from "../types/products";
-import {
-  addToCart,
-  removeFromCart,
-  permenantlyRemoveFromCart,
-} from "../composables/useCart";
+import useCart from "../composables/useCart";
 
 type updateProductAction = "increase" | "decrease" | "remove";
 
 const Header: React.FC = () => {
+  const { addToCart, removeFromCart, permenantlyRemoveFromCart, getCart } =
+    useCart();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const cart: ICartProduct[] = paseJson(
-    localStorage.getItem("__shopie__cart___") || "[]"
-  );
-  const [clickedCartProduct, useClickedCartProduct] = useState<ICartProduct>();
+  const [cart, setCart] = useState<ICartProduct[]>(getCart());
+  const [clickedCartProduct, setClickedCartProduct] = useState<ICartProduct>();
 
   const updateClickedCartProduct = (product: ICartProduct) => {
     if (!product || clickedCartProduct?.id === product?.id) {
-      useClickedCartProduct(undefined);
+      setClickedCartProduct(undefined);
       return;
     }
 
-    useClickedCartProduct(product);
+    setClickedCartProduct(product);
   };
 
   /**
@@ -37,11 +33,6 @@ const Header: React.FC = () => {
     if (!clickedCartProduct) {
       return;
     }
-
-    console.log(
-      "🚀 ~ file: Header.tsx ~ line 113 ~ updateCartProduct ~ clickedCartProduct",
-      clickedCartProduct
-    );
 
     switch (action) {
       case "increase":
@@ -56,7 +47,30 @@ const Header: React.FC = () => {
       default:
         return;
     }
+
+    console.log(getCart());
+
+    setCart(getCart()); // update cart
+    const product = cart.find(
+      (p) =>
+        p.id === clickedCartProduct.id ||
+        p.id ===
+          `${clickedCartProduct.id}-${clickedCartProduct?.chosenColor.name}`
+    );
+
+    console.log({ product });
+
+    if (product) {
+      setClickedCartProduct(product);
+      console.log({
+        clickedCartProduct,
+      });
+    }
   };
+
+  useEffect(() => {
+    setCart(getCart());
+  }, []);
 
   return (
     <>
@@ -120,10 +134,14 @@ const Header: React.FC = () => {
                 </div>
                 {/* cart items */}
                 <div className="mt-3">
+                  {/* <pre>{JSON.stringify(clickedCartProduct, null, 2)}</pre>
+                  <div className="py-2 bg-red-300"></div>
+                  <pre>{JSON.stringify(cart, null, 2)}</pre> */}
+
                   {cart?.length > 0 ? (
                     cart.map((product: ICartProduct) => (
                       <div
-                        key={product.id}
+                        key={`${clickedCartProduct?.id}-${product.id}-${clickedCartProduct?.quantity}`}
                         id={product.id}
                         className="flex justify-center backdrop-blur-sm flex-col flex-wrap gap-2 border rounded-lg mb-1 cursor-pointer hover:bg-[#f1f1f1]"
                       >
@@ -186,7 +204,7 @@ const Header: React.FC = () => {
                                 <div className="flex items-center">
                                   <Button
                                     onClick={() => {
-                                      updateCartProduct("remove");
+                                      updateCartProduct("decrease");
                                     }}
                                     bgColor="bg-stone-800"
                                     outlineBorderColor="border-stone-800"
@@ -197,7 +215,7 @@ const Header: React.FC = () => {
                                   </Button>
                                   <div className="mx-4">
                                     <span className="text-xl text-heading text-blue-500">
-                                      {product.quantity}
+                                      {clickedCartProduct.quantity}
                                     </span>
                                   </div>
                                   <Button

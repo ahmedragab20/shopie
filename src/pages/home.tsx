@@ -3,9 +3,10 @@ import Button from "../components/Base/Button";
 import Dialog from "../components/Base/Dialog";
 import useHomeProducts from "../hooks/useHomeProducts";
 import { useTailwindBreakpoints } from "../hooks/useTailwindBreakpoints";
-import { addToCart } from "../composables/useCart";
+import useCart from "../composables/useCart";
 
 const Home = () => {
+  const { addToCart } = useCart();
   const tBreakpoint = useTailwindBreakpoints();
   const moreBtnRef = useRef<HTMLDivElement>(null);
   const [seeMoreRecentDialog, setSeeMoreRecentDialog] =
