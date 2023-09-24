@@ -103,6 +103,19 @@ export const removeFromCart = (product: ICartProduct) => {
   }
 };
 
+export const permenantlyRemoveFromCart = (product: ICartProduct) => {
+  if (!product) return;
+  if (typeof product !== "object") return;
+  if (!product.id) return;
+
+  try {
+    _cart = _cart.filter((p: ICartProduct) => p.id !== product.id);
+    _setCart(_cart);
+  } catch (error) {
+    console.warn(error);
+  }
+};
+
 /**
  * total price of cart
  */

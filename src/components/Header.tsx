@@ -3,12 +3,60 @@ import Button from "./Base/Button";
 import Dialog from "./Base/Dialog";
 import { paseJson } from "../utils/validators";
 import { ICartProduct } from "../types/products";
+import {
+  addToCart,
+  removeFromCart,
+  permenantlyRemoveFromCart,
+} from "../composables/useCart";
+
+type updateProductAction = "increase" | "decrease" | "remove";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const cart: ICartProduct[] = paseJson(
     localStorage.getItem("__shopie__cart___") || "[]"
   );
+  const [clickedCartProduct, useClickedCartProduct] = useState<ICartProduct>();
+
+  const updateClickedCartProduct = (product: ICartProduct) => {
+    if (!product || clickedCartProduct?.id === product?.id) {
+      useClickedCartProduct(undefined);
+      return;
+    }
+
+    useClickedCartProduct(product);
+  };
+
+  /**
+   * - will increase/decrease the quantity of the product in cart
+   * - will remove the product completely from cart.
+   * @param action
+   * @returns
+   */
+  const updateCartProduct = (action: updateProductAction) => {
+    if (!clickedCartProduct) {
+      return;
+    }
+
+    console.log(
+      "🚀 ~ file: Header.tsx ~ line 113 ~ updateCartProduct ~ clickedCartProduct",
+      clickedCartProduct
+    );
+
+    switch (action) {
+      case "increase":
+        addToCart(clickedCartProduct);
+        break;
+      case "decrease":
+        removeFromCart(clickedCartProduct);
+        break;
+      case "remove":
+        permenantlyRemoveFromCart(clickedCartProduct);
+        break;
+      default:
+        return;
+    }
+  };
 
   return (
     <>
@@ -74,31 +122,112 @@ const Header: React.FC = () => {
                 <div className="mt-3">
                   {cart?.length > 0 ? (
                     cart.map((product: ICartProduct) => (
-                      <div className="flex items-center backdrop-blur-md justify-between flex-wrap gap-2 border p-2 rounded-lg mb-1 cursor-pointer hover:bg-[#f1f1f1]">
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 cursor-pointer select-none flex justify-center items-center overflow-hidden">
-                            <span className="w-full h-full flex justify-center items-center">
-                              <img
-                                src={product.images?.[0].url}
-                                alt={product.name}
-                                className="w-full h-full object-contain"
-                              />
-                            </span>
+                      <div
+                        key={product.id}
+                        id={product.id}
+                        className="flex justify-center backdrop-blur-sm flex-col flex-wrap gap-2 border rounded-lg mb-1 cursor-pointer hover:bg-[#f1f1f1]"
+                      >
+                        <div
+                          className="w-full flex items-center p-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (
+                              (e.target as HTMLDivElement)?.id ===
+                              "cart_actions"
+                            ) {
+                              return;
+                            }
+
+                            updateClickedCartProduct(product);
+                          }}
+                        >
+                          <div className="flex items-center w-full">
+                            <div className="sm:w-16 sm:h-16 w-12 h-12 cursor-pointer select-none flex justify-center items-center overflow-hidden">
+                              <span className="w-full h-full flex justify-center items-center">
+                                <img
+                                  src={product.images?.[0].url}
+                                  alt={product.name}
+                                  className="w-full h-full object-contain"
+                                />
+                              </span>
+                            </div>
+                            <div className="ml-3">
+                              <h5 className="text-heading text-sm -mb-2">
+                                {product.name}
+                              </h5>
+                              <span className="text-xs text-stone-400">
+                                {product.chosenColor.name}
+                              </span>
+                            </div>
                           </div>
-                          <div className="ml-3">
-                            <h5 className="text-heading text-sm">
-                              {product.name}
-                            </h5>
-                            <span className="text-xs text-stone-400">
-                              {product.chosenColor.name}
-                            </span>
+                          <div className="flex flex-col">
+                            <div className="-mb-2">
+                              <span className="text-xs text-stone-400">
+                                Qty:
+                              </span>
+                              <span className="text-xs text-stone-400 ml-1">
+                                {product.quantity}
+                              </span>
+                            </div>
+                            <div>
+                              <span>
+                                <span className="text-xs text-stone-400">
+                                  {product.price}
+                                  {product.currencySymbol}
+                                </span>
+                              </span>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex items-center">
-                          <span className="text-xs text-stone-400">Qty:</span>
-                          <span className="text-xs text-stone-400 ml-1">
-                            {product.quantity}
-                          </span>
+                        <div>
+                          {clickedCartProduct?.id === product?.id && (
+                            <div className="px-2 pb-2">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center">
+                                  <Button
+                                    onClick={() => {
+                                      updateCartProduct("remove");
+                                    }}
+                                    bgColor="bg-stone-800"
+                                    outlineBorderColor="border-stone-800"
+                                  >
+                                    <span className="text-sm text-white text-heading">
+                                      Minus
+                                    </span>
+                                  </Button>
+                                  <div className="mx-4">
+                                    <span className="text-xl text-heading text-blue-500">
+                                      {product.quantity}
+                                    </span>
+                                  </div>
+                                  <Button
+                                    onClick={() => {
+                                      updateCartProduct("increase");
+                                    }}
+                                    bgColor="bg-stone-800"
+                                    outlineBorderColor="border-stone-800"
+                                  >
+                                    <span className="text-sm text-white text-heading">
+                                      Plus
+                                    </span>
+                                  </Button>
+                                </div>
+                                <div className="flex items-center">
+                                  <Button
+                                    onClick={() => {
+                                      updateCartProduct("remove");
+                                    }}
+                                    bgColor="bg-red-400"
+                                    outlineBorderColor="border-red-200"
+                                  >
+                                    <span className="text-sm text-white text-heading">
+                                      Throw away
+                                    </span>
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))
