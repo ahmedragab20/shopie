@@ -1,0 +1,5 @@
+[1] cart product crud (increase/decrease quantity, remove product)
+[2] checkout page
+[3] animation/transition
+[4] css refactoring
+[5] performance/code-quality review
