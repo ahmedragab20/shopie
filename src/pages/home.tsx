@@ -79,9 +79,9 @@ const Home = () => {
             </p>
           </div>
           <div ref={moreBtnRef} className="opacity-0 duration-300 mt-5">
-            {/* TODO: create a reusable component for it! */}
             <Button
               onClick={() => {
+                toggleNewProductPreview(undefined); // you may don't need this as we are doing that when we close the dialog. (don't toutch it!!! no one knows what will happen if you do that :D)
                 setSeeMoreRecentDialog(true);
               }}
               bgColor="bg-[#D594A0]"
@@ -164,14 +164,16 @@ const Home = () => {
           onClose={() => {
             setSeeMoreRecentDialog(false);
             setPreviewNewProductDialog(false);
+            toggleNewProductPreview(undefined);
           }}
         >
-          <div className="bg-[#FAFAFA] backdrop-blur-xl px-2 sm:pt-5 sm:pb-5 pt-6 pb-0 border overflow-hidden shadow-2xl text-white rounded-2xl sm:w-10/12 relative sm:h-auto xl:max-h-screen w-full max-w-[1196px]">
+          <div className="bg-[#fbfbfbe9] backdrop-blur-3xl px-2 sm:pt-5 sm:pb-5 pt-6 pb-0 border overflow-hidden shadow-2xl text-white rounded-2xl sm:w-10/12 relative sm:h-auto xl:max-h-screen w-full max-w-[1196px]">
             {/* close icon */}
             <div
               onClick={() => {
                 setSeeMoreRecentDialog(false);
                 setPreviewNewProductDialog(false);
+                toggleNewProductPreview(undefined);
               }}
               className="absolute select-none top-2 right-2 z-10 shadow text-heading cursor-pointer black-bg px-3 py-0.5 text-white rounded-full duration-300 active:scale-95"
             >
@@ -183,8 +185,8 @@ const Home = () => {
               {/* details */}
               <div className="xl:w-1/2 w-full">
                 <div className="pr-3">
-                  <h3 className="xl:text-[7rem] mt-10 text-5xl text-heading text-[#333] font-extrabold">
-                    {dialogProduct?.brand}
+                  <h3 className="xl:text-[6rem] mt-10 text-5xl text-heading text-[#333] font-extrabold flex flex-wrap gap-1 max-w-full">
+                    <span>{dialogProduct?.brand}</span>
                     <strong
                       style={{
                         backgroundImage: `linear-gradient(to right, ${selectedColor?.lighter_hex}, ${selectedColor?.darker_hex})`,
@@ -259,11 +261,11 @@ const Home = () => {
               <div className="xl:w-1/2 w-full">
                 <div className="flex h-full justify-center items-center">
                   <div className="relative h-full">
-                    <div className=" w-full h-full">
+                    <div className="w-full h-full">
                       <img
                         src={activeImage?.url}
                         alt={activeImage?.alt}
-                        className="w-full h-full object-contain rounded-2xl sm:max-h-[550px] max-h-[350px]"
+                        className="w-full h-full object-contain rounded-2xl sm:max-h-[550px] max-h-[350px] mix-blend-multiply"
                       />
                     </div>
                   </div>
@@ -273,12 +275,12 @@ const Home = () => {
 
             {/* blury effect */}
             <div
-              className="absolute -bottom-1/3 -right-10 w-96 h-96 rounded-full"
+              className="absolute -bottom-1/4 -right-0 w-96 h-96 rounded-full"
               style={{
                 backgroundImage: `linear-gradient(to right, ${selectedColor?.lighter_hex}, ${selectedColor?.darker_hex})`,
                 filter: "blur(100px)",
                 zIndex: -1,
-                opacity: 0.5,
+                opacity: 0.6,
               }}
             ></div>
           </div>

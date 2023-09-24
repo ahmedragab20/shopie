@@ -14,15 +14,21 @@
     "images": [
       {
         "color": "pink",
-        "url": "/pink-iphone-15.png",
+        "url": "/pink-iphone-15.webp",
         "alt": "Pink iPhone 15 image",
         "title": "Pink iPhone 15"
       },
       {
         "color": "lightblue",
-        "url": "/lightblue-iphone-15.jpg",
+        "url": "/lightblue-iphone-15.webp",
         "alt": "Light Blue iPhone 15 image",
         "title": "Light Blue iPhone 15"
+      },
+      {
+        "color": "green",
+        "url": "/green-iphone-15.webp",
+        "alt": "Green iPhone 15 image",
+        "title": "Green iPhone 15"
       }
     ],
     "colors": [
@@ -41,6 +47,14 @@
         "color_tailwind": "text-[#CCD6DD]",
         "lighter_hex": "#E0E9F0",
         "darker_hex": "#9bb5c9"
+      },
+      {
+        "name": "green",
+        "hex": "#A3C4BC",
+        "bg_tailwind": "bg-[#A3C4BC]",
+        "color_tailwind": "text-[#A3C4BC]",
+        "lighter_hex": "#B8D2C9",
+        "darker_hex": "#6e8f85"
       }
     ]
   }
