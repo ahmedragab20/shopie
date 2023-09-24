@@ -1,8 +1,9 @@
-import { Color, Product } from "../../types/products";
+import { Color, Product } from "../types/products";
 import Button from "../components/Base/Button";
 import Dialog from "../components/Base/Dialog";
 import useHomeProducts from "../hooks/useHomeProducts";
 import { useTailwindBreakpoints } from "../hooks/useTailwindBreakpoints";
+import { addToCart } from "../composables/useCart";
 
 const Home = () => {
   const tBreakpoint = useTailwindBreakpoints();
@@ -246,6 +247,14 @@ const Home = () => {
                     <Button
                       bgColor="bg-[#333]"
                       outlineBorderColor="border-[#333]"
+                      onClick={() => {
+                        addToCart({
+                          ...dialogProduct!,
+                          quantity: 1,
+                          offer: 0,
+                          chosenColor: selectedColor!,
+                        });
+                      }}
                     >
                       <div className="flex gap-2 items-center w-full">
                         <div className="py-0.5 px-2 rounded-full bg-white font-bold text-[#222]">

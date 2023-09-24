@@ -1,4 +1,4 @@
-import { Product } from "../../types/products";
+import { Product } from "../types/products";
 
 export default function homeProduct() {
   const [products, setProducts] = useState<Product[]>([]);

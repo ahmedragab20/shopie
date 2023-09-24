@@ -29,3 +29,12 @@ export interface Color {
   lighter_hex: string;
   darker_hex: string;
 }
+
+export interface ICartProduct extends Product {
+  quantity: number;
+  /**
+   * the offer in case the product has one (0-100%)
+   */
+  offer: number;
+  chosenColor: Color;
+}
