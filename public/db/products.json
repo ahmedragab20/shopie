@@ -14,20 +14,34 @@
       "subcategory": "Android",
       "images": [
         {
-          "color": "dark_green",
-          "url": "/products/galaxy-s23-ultra.png",
+          "color": "dark green",
+          "url": "/products/green-galaxy-s23-ultra.webp",
           "alt": "Dark Green Samsung Galaxy S23 Ultra",
+          "title": "Samsung Galaxy S23 Ultra"
+        },
+        {
+          "color": "gold",
+          "url": "/products/golden-galaxy-s23-ultra.webp",
+          "alt": "Golden Samsung Galaxy S23 Ultra",
           "title": "Samsung Galaxy S23 Ultra"
         }
       ],
       "colors": [
         {
-          "name": "dark_green",
+          "name": "dark green",
           "hex": "#535A50",
           "bg_tailwind": "bg-[#535A50]",
           "color_tailwind": "text-[#535A50]",
           "lighter_hex": "#8B8F8A",
           "darker_hex": "#40463E"
+        },
+        {
+          "name": "gold",
+          "hex": "#F2EAE3",
+          "bg_tailwind": "bg-[#F2EAE3]",
+          "color_tailwind": "text-[#F2EAE3]",
+          "lighter_hex": "#EADCCF",
+          "darker_hex": "#CDA46B"
         }
       ]
     },
@@ -46,8 +60,14 @@
       "images": [
         {
           "color": "silver",
-          "url": "/products/ipad-pro.jpg",
+          "url": "/products/silver-ipad-pro.webp",
           "alt": "Silver iPad Pro",
+          "title": "iPad Pro"
+        },
+        {
+          "color": "space gray",
+          "url": "/products/spacegray-ipad-pro.webp",
+          "alt": "Space Gray iPad Pro",
           "title": "iPad Pro"
         }
       ],
@@ -59,6 +79,14 @@
           "color_tailwind": "text-[#C0C0C0]",
           "lighter_hex": "#C2E1FE",
           "darker_hex": "#105FDC"
+        },
+        {
+          "name": "space gray",
+          "hex": "#6A6A6C",
+          "bg_tailwind": "bg-[#6A6A6C]",
+          "color_tailwind": "text-[#6A6A6C]",
+          "lighter_hex": "#FBA2FA",
+          "darker_hex": "#682A81"
         }
       ]
     },
@@ -77,8 +105,14 @@
       "images": [
         {
           "color": "rose",
-          "url": "/products/oppo-find-n2-flip.webp",
+          "url": "/products/rose-oppo-find-n2-flip.webp",
           "alt": "Rose Oppo Find N2 Flip",
+          "title": "Oppo Find N2 Flip"
+        },
+        {
+          "color": "black",
+          "url": "/products/black-oppo-find-n2-flip.webp",
+          "alt": "Black Oppo Find N2 Flip",
           "title": "Oppo Find N2 Flip"
         }
       ],
@@ -90,6 +124,14 @@
           "color_tailwind": "text-[#B4B0D6]",
           "lighter_hex": "#E4D9F1",
           "darker_hex": "#9285AE"
+        },
+        {
+          "name": "black",
+          "hex": "#292B2F",
+          "bg_tailwind": "bg-[#292B2F]",
+          "color_tailwind": "text-[#292B2F]",
+          "lighter_hex": "#545657",
+          "darker_hex": "#0C5070"
         }
       ]
     },
@@ -108,14 +150,28 @@
       "images": [
         {
           "color": "silver",
-          "url": "/products/macbook-pro.png",
+          "url": "/products/silver-macbook-pro.webp",
           "alt": "Silver MacBook Pro",
+          "title": "MacBook Pro"
+        },
+        {
+          "color": "space gray",
+          "url": "/products/spacegray-macbook-pro.webp",
+          "alt": "Space Gray MacBook Pro",
           "title": "MacBook Pro"
         }
       ],
       "colors": [
         {
           "name": "silver",
+          "hex": "#F1F1F1",
+          "bg_tailwind": "bg-[#F1F1F1]",
+          "color_tailwind": "text-[#F1F1F1]",
+          "lighter_hex": "#021A2C",
+          "darker_hex": "#1D804C"
+        },
+        {
+          "name": "space gray",
           "hex": "#C0C0C0",
           "bg_tailwind": "bg-[#C0C0C0]",
           "color_tailwind": "text-[#C0C0C0]",

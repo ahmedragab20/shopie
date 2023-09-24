@@ -42,7 +42,7 @@ const Header: React.FC = () => {
             setIsOpen(false);
           }}
         >
-          <div className="bg-[#f4f4f4ee] overflow-hidden shadow-2xl rounded-2xl relative max-w-5xl">
+          <div className="bg-[#f4f4f4ee] flex shadow-2xl rounded-2xl relative max-w-5xl max-h-[90svh] overflow-hidden">
             <div
               onClick={() => {
                 setIsOpen(false);
