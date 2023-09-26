@@ -1,25 +1,31 @@
 import React from "react";
 import Button from "./Base/Button";
 import Dialog from "./Base/Dialog";
-// import { paseJson } from "../utils/validators";
+import { paseJson } from "../utils/validators";
 import { ICartProduct } from "../types/products";
 import useCart from "../composables/useCart";
 
 type updateProductAction = "increase" | "decrease" | "remove";
 
 const Header: React.FC = () => {
-  const { addToCart, removeFromCart, permenantlyRemoveFromCart, getCart } =
-    useCart();
+  const { addToCart, removeFromCart, permenantlyRemoveFromCart } = useCart();
+  const cart: ICartProduct[] = paseJson(
+    localStorage.getItem("__shopie__cart__") || "[]"
+  )!;
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [cart, setCart] = useState<ICartProduct[]>(getCart());
   const [clickedCartProduct, setClickedCartProduct] = useState<ICartProduct>();
-
+  const [clickedCartProductQuantity, setClickedCartProductQuantity] =
+    useState<number>(0);
   const updateClickedCartProduct = (product: ICartProduct) => {
     if (!product || clickedCartProduct?.id === product?.id) {
+      console.log("product is undefined or same product clicked");
+
       setClickedCartProduct(undefined);
       return;
     }
+    console.log(product.quantity);
 
+    setClickedCartProductQuantity(product.quantity);
     setClickedCartProduct(product);
   };
 
@@ -33,24 +39,34 @@ const Header: React.FC = () => {
     if (!clickedCartProduct) {
       return;
     }
+    console.log(
+      `%c${action}`,
+      "color: #73C6B6; font-weight: bold; font-size: 20px;"
+    );
 
     switch (action) {
       case "increase":
+        console.log("increase", clickedCartProduct);
+        setClickedCartProductQuantity(clickedCartProductQuantity + 1);
         addToCart(clickedCartProduct);
         break;
       case "decrease":
+        console.log("decrease", clickedCartProduct);
+        if (clickedCartProductQuantity <= 1) {
+          return;
+        }
+        setClickedCartProductQuantity(clickedCartProductQuantity - 1);
         removeFromCart(clickedCartProduct);
         break;
       case "remove":
+        console.log("remove", clickedCartProduct);
+        setClickedCartProductQuantity(0);
         permenantlyRemoveFromCart(clickedCartProduct);
         break;
       default:
-        return;
+        break;
     }
 
-    console.log(getCart());
-
-    setCart(getCart()); // update cart
     const product = cart.find(
       (p) =>
         p.id === clickedCartProduct.id ||
@@ -58,19 +74,21 @@ const Header: React.FC = () => {
           `${clickedCartProduct.id}-${clickedCartProduct?.chosenColor.name}`
     );
 
-    console.log({ product });
-
     if (product) {
       setClickedCartProduct(product);
-      console.log({
-        clickedCartProduct,
-      });
     }
   };
 
   useEffect(() => {
-    setCart(getCart());
-  }, []);
+    console.log("cart changed too much", cart);
+  }, [cart]);
+
+  useEffect(() => {
+    console.log(
+      "clickedCartProductQuantity changed too much",
+      clickedCartProductQuantity
+    );
+  }, [clickedCartProductQuantity]);
 
   return (
     <>
@@ -134,14 +152,10 @@ const Header: React.FC = () => {
                 </div>
                 {/* cart items */}
                 <div className="mt-3">
-                  {/* <pre>{JSON.stringify(clickedCartProduct, null, 2)}</pre>
-                  <div className="py-2 bg-red-300"></div>
-                  <pre>{JSON.stringify(cart, null, 2)}</pre> */}
-
                   {cart?.length > 0 ? (
                     cart.map((product: ICartProduct) => (
                       <div
-                        key={`${clickedCartProduct?.id}-${product.id}-${clickedCartProduct?.quantity}`}
+                        key={product?.id}
                         id={product.id}
                         className="flex justify-center backdrop-blur-sm flex-col flex-wrap gap-2 border rounded-lg mb-1 cursor-pointer hover:bg-[#f1f1f1]"
                       >
@@ -215,7 +229,8 @@ const Header: React.FC = () => {
                                   </Button>
                                   <div className="mx-4">
                                     <span className="text-xl text-heading text-blue-500">
-                                      {clickedCartProduct.quantity}
+                                      {/* {clickedCartProduct.quantity} */}
+                                      {clickedCartProductQuantity}
                                     </span>
                                   </div>
                                   <Button
@@ -273,3 +288,6 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+function parseJson(arg0: string) {
+  throw new Error("Function not implemented.");
+}

@@ -5,6 +5,8 @@ function useCart() {
   const [_cart, setCart] = useState<ICartProduct[]>([]);
 
   const _setCart = (cart: ICartProduct[]) => {
+    console.log(_cart, cart);
+
     setCart(cart);
     localStorage.setItem("__shopie__cart__", JSON.stringify(cart));
   };
@@ -62,11 +64,14 @@ function useCart() {
             newProductInstance.colors = [color as any];
           }
 
-          // _cart.unshift(newProductInstance);
+          console.log("if condition");
+
           const _nCart = JSON.parse(JSON.stringify(_cart));
           _nCart.unshift(newProductInstance);
           _setCart(_nCart);
         } else {
+          console.log("else condition");
+
           existingProduct.quantity += 1;
         }
       } else {
@@ -166,7 +171,7 @@ function useCart() {
     permenantlyRemoveFromCart,
     cartTotalPrice,
     clearCart,
-    getCart,
+    cart: getCart(),
   };
 }
 
