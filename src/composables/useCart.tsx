@@ -1,19 +1,55 @@
 import { ICartProduct, Image } from "../types/products";
 import { paseJson } from "../utils/validators";
 
-function useCart() {
+function useCart(onDialog?: boolean) {
   const [_cart, setCart] = useState<ICartProduct[]>([]);
-
   const _setCart = (cart: ICartProduct[]) => {
-    console.log(_cart, cart);
+    const stored_cart = paseJson(
+      localStorage.getItem("__shopie__cart__") || "[]"
+    );
+    let cart_clone = paseJson(JSON.stringify(cart));
 
-    setCart(cart);
-    localStorage.setItem("__shopie__cart__", JSON.stringify(cart));
+    const updated_cart = cart.map((product) => {
+      const arr: ICartProduct[] = [];
+      cart_clone.forEach((p: ICartProduct) => {
+        if (p.id === product.id) {
+          arr.push(p);
+        }
+      });
+      console.log({ arr });
+
+      return arr[0];
+    });
+
+    console.log({
+      stored_cart,
+      updated_cart,
+    });
+
+    localStorage.setItem("__shopie__cart__", JSON.stringify(updated_cart));
+    setCart(updated_cart);
+
+    console.log(
+      `%cCart updated`,
+      "color: #C0B196; font-weight: bold; font-size: 0.9rem;",
+      updated_cart
+    );
   };
   useEffect(() => {
     const c = paseJson(localStorage.getItem("__shopie__cart__") || "[]");
     _setCart(c);
-  }, []);
+
+    return () => {
+      const c = paseJson(localStorage.getItem("__shopie__cart__") || "[]");
+      setCart(c);
+
+      console.log(
+        `%cCleaning the cart`,
+        "color: #886032; font-weight: bold; font-size: 0.9rem;",
+        c
+      );
+    };
+  }, [onDialog]);
 
   /**
    * check if product exists in cart
@@ -64,22 +100,23 @@ function useCart() {
             newProductInstance.colors = [color as any];
           }
 
-          console.log("if condition");
-
           const _nCart = JSON.parse(JSON.stringify(_cart));
           _nCart.unshift(newProductInstance);
           _setCart(_nCart);
         } else {
-          console.log("else condition");
-
-          existingProduct.quantity += 1;
+          const clonedProduct = JSON.parse(JSON.stringify(existingProduct));
+          clonedProduct.quantity += 1;
+          const _nCart = _cart.filter(
+            (p: ICartProduct) => p.id !== existingProduct.id
+          );
+          _nCart.unshift(clonedProduct);
+          _setCart(_nCart);
         }
       } else {
         const _nCart = JSON.parse(JSON.stringify(_cart));
         _nCart.unshift(product);
         _setCart(_nCart);
       }
-      console.log(_cart);
     } catch (error) {
       console.warn(error);
     }
@@ -121,8 +158,6 @@ function useCart() {
           }
         }
       }
-
-      console.log(_cart);
     } catch (error) {
       console.warn(error);
     }
@@ -142,6 +177,69 @@ function useCart() {
   };
 
   /**
+   * Increase quantity of product in cart
+   * @param product
+   */
+  const increaseQuantity = (product: ICartProduct) => {
+    if (!product) return;
+    if (typeof product !== "object") return;
+    if (!product.id) return;
+
+    try {
+      if (_productExists(product)) {
+        const existingProduct = _cart.find(
+          (p: ICartProduct) => p.id === product.id
+        );
+        if (existingProduct) {
+          const clonedProduct = JSON.parse(JSON.stringify(existingProduct));
+          clonedProduct.quantity += 1;
+          const _nCart = _cart.filter(
+            (p: ICartProduct) => p.id !== existingProduct.id
+          );
+          _nCart.unshift(clonedProduct);
+          _setCart(_nCart);
+        }
+      }
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
+  /**
+   * Decrease quantity of product in cart
+   * @param product
+   */
+  const decreaseQuantity = (product: ICartProduct) => {
+    if (!product) return;
+    if (typeof product !== "object") return;
+    if (!product.id) return;
+
+    try {
+      if (_productExists(product)) {
+        const existingProduct = _cart.find(
+          (p: ICartProduct) => p.id === product.id
+        );
+        if (existingProduct) {
+          if (existingProduct.quantity > 1) {
+            let clonedProduct = JSON.parse(JSON.stringify(existingProduct));
+            clonedProduct.quantity -= 1;
+            let _nCart = _cart.filter(
+              (p: ICartProduct) => p.id !== existingProduct.id
+            );
+            _nCart.unshift(clonedProduct);
+            _setCart(_nCart);
+          } else {
+            alert("Removing product from cart");
+            permenantlyRemoveFromCart(product);
+          }
+        }
+      }
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
+  /**
    * total price of cart
    */
   const cartTotalPrice = () => {
@@ -155,14 +253,9 @@ function useCart() {
    */
   const clearCart = () => {
     _setCart([]);
-  };
-
-  /**
-   * Get cart
-   * @returns cart
-   */
-  const getCart = (): ICartProduct[] => {
-    return _cart;
+    const c = paseJson(localStorage.getItem("__shopie__cart__") || "[]");
+    _setCart(c);
+    console.log(_cart);
   };
 
   return {
@@ -171,7 +264,9 @@ function useCart() {
     permenantlyRemoveFromCart,
     cartTotalPrice,
     clearCart,
-    cart: getCart(),
+    increaseQuantity,
+    decreaseQuantity,
+    cart: _cart,
   };
 }
 
